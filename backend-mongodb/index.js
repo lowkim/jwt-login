@@ -9,11 +9,11 @@ import {user} from './src/controllers/users'
 const app = express()
 app.use(express.json())
 
-app.get('/user', async (req, res) => {
+app.get('/login', async (req, res) => {
     const result = await user.getUser(req.query)
     res.send(result)
 })
-app.post('/createUser', async (req, res) => {
+app.post('/signup', async (req, res) => {
     await user.createUser(req.body)
     res.send("whaddup")
 })

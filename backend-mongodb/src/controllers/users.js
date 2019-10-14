@@ -1,16 +1,23 @@
 import userSchema from '../schemas/userSchema'
-import crypto from 'crypto'
-const sha256 = crypto.createHash('sha256')
+import {hashPassword, checkPassword} from '../common'
+
 const createUser = async ({username, password}) => {
-    const hashedPassword = sha256.update(password).digest('hex')
-    console.log(hashedPassword)
-    const newUser = new userSchema({username, password:hashedPassword})
-    await newUser.save()
+    hashPassword(password).then(async hashedPassword =>{
+        console.log(hashedPassword)
+        const newUser = new userSchema({username, password:hashedPassword})
+        await newUser.save()
+    })
 }
 
-const getUser = async ({username}) => {
+const getUser = async ({username, password}) => {
     const foundUser = await userSchema.findByLogin(username)
-    return foundUser.username
+    const result = await checkPassword(password, foundUser.password).then(isPasswordCorrect=>{
+        if(!isPasswordCorrect){
+            return "Password is incorrect"
+        }
+        return foundUser
+    })
+    return result
 }
 
 const user = {

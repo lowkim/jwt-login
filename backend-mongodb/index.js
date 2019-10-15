@@ -1,5 +1,6 @@
 require('dotenv').config();
 import express from 'express';
+import cors from 'cors'
 import {
     connectDb,
     models
@@ -9,9 +10,10 @@ import { checkToken } from "./src/middleware";
 
 const app = express()
 app.use(express.json())
+app.use(cors())
 
 app.get('/login',async (req, res) => {
-    console.log("Calling /login")
+    console.log(req.query)
     const result = await user.getUser(req.query)
     res.send(result)
 })

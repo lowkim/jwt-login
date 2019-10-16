@@ -9,10 +9,12 @@ const createUser = async ({username, email, password}) => {
         await newUser.save()
     })
 }
+const meme = async ({username}) => {
+    const founduser = await userSchema.findByLogin(username)
+    return founduser
+}
 
 const getUser = async ({username, password}) => {
-    console.log("username ==> ", username)
-    console.log("password ==> ", password)
     if(username && password){
         const foundUser = await userSchema.findByLogin(username)
         if(foundUser){
@@ -46,7 +48,7 @@ const getUser = async ({username, password}) => {
 }
 
 const user = {
-    createUser,getUser
+    createUser,getUser, meme
 }
 export {
     user

@@ -10,20 +10,24 @@
 
 <script>
 import Api from '../service/Api'
+import { setItem } from "../service/local";
 export default {
     name:"login",
     data(){
         return {
             user:{
-                username:"",
-                password:""
+                username:"pykyjuca",
+                password:"Pa$$w0rd!"
             }
         }
     },
     methods:{
         submit(){
             Api().get('/login',{params:this.user}).then(res => {
-                console.log(res)
+                const {token}=res.data;
+                setItem('jwt', token)
+                console.log('submit login')
+                this.$router.push({name:"user"})
             })
         }
     }

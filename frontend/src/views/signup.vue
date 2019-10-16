@@ -31,6 +31,8 @@ export default {
     },
     methods:{
       submit(){
+        console.log(this.user.username)
+        console.log(this.user.password)
         Api().post('/signup', this.user).then(res => {
           console.log(res)
         })

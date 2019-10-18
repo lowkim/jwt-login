@@ -1,28 +1,30 @@
 <template>
     <div>
         <p>Welcome to le user page</p>        
+        <button type="button" @click="logout">Logout</button>
+        <p>{{username}}</p>
     </div>
 </template>
 
 <script>
 import {decodeToken} from '../service/jwt'
-import {getItem} from '../service/local'
+import {getItem, removeItem} from '../service/local'
+import Api from '../service/Api'
 export default {
     name:'user',
     data(){
         return {
-
+            username: ""
         }
     },
     mounted() {
-        console.log(decodeToken(getItem('jwt')))
-        // this.getUserData()
+        const userData = decodeToken(getItem('jwt'))
+        this.username = userData.username
     },
     methods:{
-        getUserData(){
-            Api().get('/user').then(res => {
-                console.log()
-            })
+        logout(){
+            removeItem('jwt')
+            this.$router.push({name:"login"})
         }
     }
 }

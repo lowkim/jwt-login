@@ -10,7 +10,10 @@ const createUser = async ({username, email, password}) => {
     })
 }
 const meme = async ({username}) => {
+    console.log("Calling meme")
+    console.log(username)
     const founduser = await userSchema.findByLogin(username)
+    console.log(founduser)
     return founduser
 }
 

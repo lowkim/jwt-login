@@ -23,7 +23,7 @@ app.post('/signup', async (req, res) => {
     res.send("whaddup")
 })
 app.get('/user', async (req, res)=>{
-    const result = await user.meme;
+    const result = await user.meme(res.query);
     res.send(result)
 })
 app.get('/', checkToken, (req, res)=>{

@@ -21,6 +21,23 @@ async function putData(tableName, data){
     })
 }
 
+async function getData(tableName, data){
+    console.log("Calling getdata")
+    const params = {
+        TableName: tableName,
+        Key: data
+    }
+
+    const request = docClient.get(params).promise()
+    let result;
+    await request.then(function(data){
+        result = data
+    }).catch(function(err){
+        result = err
+    })
+    return result;
+}
 module.exports = {
-    putData
+    putData,
+    getData
 }

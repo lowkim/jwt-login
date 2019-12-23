@@ -3,8 +3,7 @@
 
 const user = require('./src/user_dynamo');
 exports.lambdaHandler = async (event, context) => {
-    const {httpMethod, resource:route, body} = event
-    console.log(event)
+    const {httpMethod, resource:route, body, queryStringParameters:data} = event
     let response = {
         'statusCode': 200,
         'body': JSON.stringify({
@@ -16,8 +15,8 @@ exports.lambdaHandler = async (event, context) => {
         if(httpMethod === "GET"){
             switch(route){
                 case '/login':
-                    // response = {statusCode:100, body:{message:'nani'}}
                     console.log("login")
+                    respond = await user.authenticateUser(data)
                     break;
                 case '/user':
                     console.log('user')

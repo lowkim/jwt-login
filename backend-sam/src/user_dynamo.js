@@ -10,38 +10,38 @@ async function createUser({username, password}){
 }
 
 const authenticateUser = async ({ username, password }) => {
-    console.log("Calling auth")
     if (username && password) {
-        console.log("HI")
         const {Item: foundUser} = await helper.getData(tableName, {'username':username})
-        console.log("foundUser ==> ",foundUser)
         if (foundUser) {
-            const isPasswordEqual = await checkPassword(password, foundUser.password)
+            const isPasswordEqual = await common.checkPassword(password, foundUser.password)
             if (isPasswordEqual) {
+                console.log("PAssword is equal")
                 let secret = process.env.SUPERSECRET
                 let token = jwt.sign({ username }, secret, { expiresIn: '24h' })
-                console.log(token)
                 return {
-                    success: true,
                     message: 'Authentication successful',
-                    token
+                    statusCode : 200,
+                    body:{token}
                 }
             } else {
                 return {
-                    success: false,
-                    message: 'Incorrect password'
+                    message: 'Incorrect password',
+                    statusCode : 200,
+                    body:""
                 }
             }
         } else {
             return {
-                success: false,
-                message: 'Authentication failed!'
+                message: 'Authentication failed!',
+                statusCode : 400,
+                body: ""            
             }
         }
     } else {
         return {
-            success: false,
-            message: 'Authentication failed!'
+            message: 'Authentication failed!',
+            statusCode : 400,
+            body: "" 
         }
     }
 }

@@ -13,17 +13,15 @@ app.use(express.json())
 app.use(cors())
 
 app.get('/login',async (req, res) => {
-    console.log(req.query)
-    const result = await user.getUser(req.query)
+    const result = await user.authenticateUser(req.query)
     res.send(result)
 })
 app.post('/signup', async (req, res) => {
-    console.log("Calling /signup")
-    await user.createUser(req.body)
-    res.send("whaddup")
+    const result = await user.createUser(req.body)
+    res.send(result)
 })
 app.get('/user', async (req, res)=>{
-    const result = await user.meme(res.query);
+    const result = await user.getUserByUsername(res.query);
     res.send(result)
 })
 app.get('/', checkToken, (req, res)=>{
@@ -34,7 +32,7 @@ app.get('/', checkToken, (req, res)=>{
 })
 
 connectDb().then(async _ => {
-    const eraseDatabaseOnSync = false
+    const eraseDatabaseOnSync = true
     if (eraseDatabaseOnSync) {
         await Promise.all([
           models.User.deleteMany({}),

@@ -34,7 +34,7 @@ app.get('/', checkToken, (req, res)=>{
 })
 
 connectDb().then(async _ => {
-    const eraseDatabaseOnSync = true
+    const eraseDatabaseOnSync = false
     if (eraseDatabaseOnSync) {
         await Promise.all([
           models.User.deleteMany({}),

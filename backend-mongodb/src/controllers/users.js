@@ -25,6 +25,7 @@ const getUser = async ({username, password}) => {
             if(isPasswordEqual){
                 let secret = process.env.SUPERSECRET
                 let token = jwt.sign({username}, secret,{expiresIn:'24h'})
+                console.log(token)
                 return {
                     success: true,
                     message: 'Authentication successful',

@@ -4,6 +4,7 @@ import Login from './views/login.vue';
 import SignUp from './views/signup.vue';
 import User from './views/user.vue';
 import NotFound from './views/404.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -11,8 +12,8 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path:'*',
-      redirect:'/404'
+      path: '*',
+      redirect: '/404',
     },
     {
       path: '/login',

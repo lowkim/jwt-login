@@ -7,10 +7,11 @@ import { isTokenValid } from './service/jwt';
 Vue.config.productionTip = false;
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
     const jwt = getItem('jwt');
-    console.log("isTokenValid ==> ", isTokenValid(jwt))
-    if (jwt != null && isTokenValid(jwt)) {
+    const isTokenVal = isTokenValid(jwt);
+    console.log('isTokenValid ==> ', isTokenVal);
+    if (jwt != null && isTokenVal) {
       next();
     } else {
       next({
@@ -25,5 +26,5 @@ router.beforeEach((to, from, next) => {
 
 new Vue({
   router,
-  render: h => h(App),
+  render: (h) => h(App),
 }).$mount('#app');
